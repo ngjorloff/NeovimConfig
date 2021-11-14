@@ -30,9 +30,18 @@ if (!(Test-Path $autoloadPlug)) {
     )
 }
 
+# Check if NodeJS exists, since it is a dependency for CoC
+
+if (!(Get-Command "node" -errorAction SilentlyContinue)) {
+    # TODO: automate installing NodeJS
+    Write-Host "NodeJS is not installed, please download it and try again: https://nodejs.org/en/"
+    exit 1
+}
+
 # Install plugins
 
 & nvim -c "PlugInstall"
 
 Write-Host "--- Script finished ---"
 
+exit 0
