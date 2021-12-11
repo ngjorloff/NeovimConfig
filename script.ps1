@@ -40,6 +40,11 @@ if (!(Get-Command "node" -errorAction SilentlyContinue)) {
 
 # Install plugins
 
+if (!(Get-Command "nvim" -errorAction SilentlyContinue)) {
+    Write-Host "Neovim is not added to PATH, cannot install plugins"
+    exit 1
+}
+
 & nvim -c "PlugInstall"
 
 Write-Host "--- Script finished ---"
