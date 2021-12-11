@@ -19,6 +19,7 @@ $autoloadPlug = "$env:LocalAppdata\nvim\autoload\plug.vim"
 if (!(Test-Path $autoloadPlug)) {
     Write-Host "Creating autoload\plug.vim"
 
+    # TODO: use environment variable for path
     mkdir ~\AppData\Local\nvim\autoload | Out-Null
 
     $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
