@@ -14,6 +14,8 @@ Copy-Item -Path ".\*" -Destination $neovimDir -Recurse -Include "*.vim"
 
 # Create autoload\plug.vim if it does not exist
 
+# TODO: use Packer instead of vim plug
+
 $autoloadPlug = "$env:LocalAppdata\nvim\autoload\plug.vim"
 
 if (!(Test-Path $autoloadPlug)) {
@@ -46,6 +48,7 @@ if (!(Get-Command "nvim" -errorAction SilentlyContinue)) {
     exit 1
 }
 
+# TODO: use PackerSync
 & nvim -c "PlugInstall"
 
 Write-Host "--- Script finished ---"
