@@ -8,7 +8,16 @@ require('packer').startup(function()
   }
   use 'vim-airline/vim-airline'
   use 'vim-airline/vim-airline-themes'
+  -- Uncomment package using
+  -- and config below to use Treesitter
+  -- use 'nvim-treesitter/nvim-treesitter'
+  use 'vimwiki/vimwiki'
+  use 'joshdick/onedark.vim'
+  use 'morhetz/gruvbox'
 end)
+
+-- No swap file
+vim.bo.swapfile = false
 
 -- Cursor
 vim.o.guicursor = ""
@@ -22,10 +31,10 @@ vim.wo.relativenumber = true
 
 -- Indentation
 vim.bo.expandtab = true
-vim.bo.autoindent = true
-vim.wo.linebreak = true
+vim.bo.smartindent = true
 vim.bo.shiftwidth = 4
-vim.bo.tabstop = 4
+vim.bo.softtabstop = 4
+vim.wo.linebreak = true
 
 -- Searching
 vim.o.incsearch = true
@@ -43,8 +52,10 @@ vim.o.termguicolors = true
 -- Colorscheme
 vim.cmd [[
 try
-  colorscheme dracula
-  let g:dracula_italic = 0
+  "colorscheme dracula
+  "colorscheme onedark
+  colorscheme gruvbox
+  " et g:dracula_italic = 0
 catch /^Vim\%((\a\+)\)\=:E185/
   colorscheme default
   set background=dark
@@ -54,9 +65,32 @@ endtry
 -- Airline
 vim.cmd [[
 try
-  let g:airline_theme='dracula'
+  "let g:airline_theme='dracula'
+  "let g:airline_theme='onedark'
+  let g:airline_theme='gruvbox'
   let g:airline_powerline_fonts = 1
-  let g:airline#extensions#tabline#enabled = 1
+  let g:gruvbox#extensions#tabline#enabled = 1
+catch
+endtry
+]]
+
+-- Treesitter
+-- local configs = require'nvim-treesitter.configs'
+-- configs.setup {
+--   ensure_installed = "maintained", -- Only use parsers that are maintained
+--   highlight = { -- enable highlighting
+--     enable = true,
+--   },
+--   indent = {
+--     enable = false, -- default is disabled anyways
+--   }
+-- }
+
+-- VimWiki
+vim.cmd [[
+try
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
 catch
 endtry
 ]]
@@ -81,7 +115,7 @@ keymap('n', '<c-h>', '<c-w>h', opts)
 keymap('n', '<c-l>', '<c-w>l', opts)
 
 -- Exit with q
-keymap('n', '<leader>q', ':q<CR>', {})
+keymap('n', '<leader>q', ':q<CR>', { silent = true })
 
 -- Make espace do nothing when in insert mode
 keymap("i", "<Esc>", "<Nop>", opts)
