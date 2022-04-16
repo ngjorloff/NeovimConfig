@@ -1,6 +1,6 @@
 # Neovim Lua configuration
 
-**You need to have a Neovim version >= 0.5!**
+**You need to have a Neovim version 0.5+!**
 
 Get the nightly build or a 0.5+ version from here [Neovim releases](https://github.com/neovim/neovim/releases/).
 
