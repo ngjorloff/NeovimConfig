@@ -14,6 +14,7 @@ require('packer').startup(function()
   use 'vimwiki/vimwiki'
   use 'joshdick/onedark.vim'
   use 'morhetz/gruvbox'
+  use 'tpope/vim-fugitive'
 end)
 
 -- No swap file
@@ -46,7 +47,8 @@ vim.o.splitbelow = true
 vim.o.splitright = true
 
 -- Background
-vim.o.background = "dark"
+vim.o.background = "light"
+--vim.o.background = "dark"
 vim.o.termguicolors = true
 
 -- Colorscheme
@@ -123,9 +125,15 @@ keymap("i", "<Esc>", "<Nop>", opts)
 -- Use jj instead of espace to exit normal mode
 keymap('i', 'jj', '<Esc>', opts)
 
--- Splitting
+-- Splitting keymaps
 keymap('n', '<leader>v', ':vsplit<space>', {})
 keymap('n', '<leader>h', ':split<space>', {})
+
+-- Resize splits
+keymap('n', '<up>', '<c-w>+', opts)
+keymap('n', '<down>', '<c-w>-', opts)
+keymap('n', '<left>', '3<c-w><', opts)
+keymap('n', '<right>', '3<c-w>>', opts)
 
 -- Hide search results
 keymap('n', '<leader>n', ':nohl<CR>', { silent = true })
