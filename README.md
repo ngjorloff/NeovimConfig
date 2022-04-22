@@ -4,7 +4,7 @@
 
 Get the nightly build or a 0.5+ version from here [Neovim releases](https://github.com/neovim/neovim/releases/).
 
-For package management download and setup [Packer](https://github.com/wbthomason/packer.nvim) (or clone directly using line below).
+For package management download and setup [Packer](https://github.com/wbthomason/packer.nvim) (or clone directly using command below).
 
 ```ps1
 git clone https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim"
