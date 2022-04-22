@@ -30,6 +30,12 @@ vim.o.guicursor = ""
 -- Hide the mode since we are using Airline
 vim.o.showmode = false
 
+-- Use one universal statusline
+vim.o.laststatus = 3
+
+-- Highlight current line
+vim.wo.cursorline = true
+
 -- Line numbers
 vim.wo.number = true
 vim.wo.relativenumber = true
