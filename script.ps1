@@ -1,56 +1,22 @@
-# Create nvim directory if it does not exist
-
-$neovimDir = "$env:LocalAppdata\nvim"
+$neovimDir = "$env:LOCALAPPDATA\nvim"
 
 if (!(Test-Path -PathType Container $neovimDir)) {
     Write-Host "Creating directory $neovimDir"
     New-Item -ItemType Directory -Force -Path $neovimDir | Out-Null
 }
 
-# Copy .vim files
-
 Write-Host "Copying .vim files to $neovimDir"
-Copy-Item -Path ".\*" -Destination $neovimDir -Recurse -Include "*.vim"
+Copy-Item -Path ".\*" -Destination $neovimDir -Recurse -Include ".lua"
 
-# Create autoload\plug.vim if it does not exist
-
-# TODO: use Packer instead of vim plug
-
-$autoloadPlug = "$env:LocalAppdata\nvim\autoload\plug.vim"
-
-if (!(Test-Path $autoloadPlug)) {
-    Write-Host "Creating autoload\plug.vim"
-
-    # TODO: use environment variable for path
-    mkdir ~\AppData\Local\nvim\autoload | Out-Null
-
-    $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    (New-Object Net.WebClient).DownloadFile(
-        $uri,
-        $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(
-            $autoloadPlug
-        )
-    )
-}
-
-# Check if NodeJS exists, since it is a dependency for CoC
-
-if (!(Get-Command "node" -errorAction SilentlyContinue)) {
-    # TODO: automate installing NodeJS
-    Write-Host "NodeJS is not installed, please download it and try again: https://nodejs.org/en/"
-    exit 1
-}
-
-# Install plugins
+& git clone https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim"
 
 if (!(Get-Command "nvim" -errorAction SilentlyContinue)) {
     Write-Host "Neovim is not added to PATH, cannot install plugins"
     exit 1
 }
 
-# TODO: use PackerSync
-& nvim -c "PlugInstall"
+& nvim -c "PackerSync"
 
-Write-Host "--- Script finished ---"
+Write-Host "Script finished"
 
 exit 0
