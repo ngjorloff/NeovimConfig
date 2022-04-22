@@ -2,10 +2,10 @@
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
-  -- Utils
-  use 'vimwiki/vimwiki'
+  -- Git
   use 'tpope/vim-fugitive'
 
+  -- Telescope
   use {
       'nvim-telescope/telescope.nvim',
       requires = { {'nvim-lua/plenary.nvim'} }
@@ -13,11 +13,24 @@ require('packer').startup(function()
 
   -- TreeSitter
   use 'nvim-treesitter/nvim-treesitter'
- 
+
+  -- LSP
+  use 'neovim/nvim-lspconfig'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+  use 'hrsh7th/nvim-cmp'
+
+  -- Snippets
+  use 'L3MON4D3/LuaSnip'
+  use 'saadparwaiz1/cmp_luasnip'
+
   -- Colorschemes
   use 'morhetz/gruvbox'
   use 'arcticicestudio/nord-vim'
 
+  -- Airline
   use 'vim-airline/vim-airline'
   use 'vim-airline/vim-airline-themes'
 end)
@@ -34,8 +47,21 @@ vim.o.showmode = false
 -- Use one universal statusline
 vim.o.laststatus = 3
 
--- Highlight current line
-vim.wo.cursorline = true
+-- Only highlight the line in current buffer
+vim.opt.cursorline = true
+local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
+local set_cursorline = function(event, value, pattern)
+  vim.api.nvim_create_autocmd(event, {
+    group = group,
+    pattern = pattern,
+    callback = function()
+      vim.opt_local.cursorline = value
+    end,
+  })
+end
+set_cursorline("WinLeave", false)
+set_cursorline("WinEnter", true)
+set_cursorline("FileType", false, "TelescopePrompt")
 
 -- Line numbers
 vim.wo.number = true
@@ -93,14 +119,45 @@ configs.setup {
   }
 }
 
--- VimWiki
-vim.cmd [[
-try
-let g:vimwiki_list = [{'path': '~/vimwiki/',
-                      \ 'syntax': 'markdown', 'ext': '.md'}]
-catch
-endtry
-]]
+-- nvim-cmp.
+local cmp = require'cmp'
+
+cmp.setup({
+  snippet = {
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
+  window = {
+    --completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'buffer', keyword_length = 5 }
+  })
+})
+
+-- Setup lspconfig
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+--require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
+--  capabilities = capabilities
+--}
+
+-- C# lsp installed by running `dotnet tool install --global csharp-ls`, does not seem to work
+--require'lspconfig'.csharp_ls.setup{
+--    capabilities = capabilities,
+--}
 
 -- KEYMAPPINGS
 local keymap = vim.api.nvim_set_keymap
