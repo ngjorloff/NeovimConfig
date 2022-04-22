@@ -47,7 +47,7 @@ vim.o.showmode = false
 -- Use one universal statusline
 vim.o.laststatus = 3
 
--- Only highlight the line in current buffer
+-- Only highlight the line in current buffer (borrowed from https://github.com/tjdevries)
 vim.opt.cursorline = true
 local group = vim.api.nvim_create_augroup("CursorLineControl", { clear = true })
 local set_cursorline = function(event, value, pattern)
@@ -182,11 +182,11 @@ keymap("i", "<Esc>", "<Nop>", noremap)
 -- Use jj instead of escape to exit normal mode
 keymap('i', 'jj', '<Esc>', noremap)
 
--- Creating splits
+-- Create splits
 keymap('n', '<leader>v', ':vsplit<space>', {})
 keymap('n', '<leader>h', ':split<space>', {})
 
--- Moving between splits
+-- Move between splits
 keymap('n', '<c-j>', '<c-w>j', noremap)
 keymap('n', '<c-k>', '<c-w>k', noremap)
 keymap('n', '<c-h>', '<c-w>h', noremap)
