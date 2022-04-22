@@ -162,6 +162,7 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 -- KEYMAPPINGS
 local keymap = vim.api.nvim_set_keymap
 local opts = { noremap = true }
+local silent = { silent = true }
 
 -- Set leader key to space
 keymap("", "<Space>", "<Nop>", opts)
@@ -172,24 +173,24 @@ vim.g.maplocalleader = " "
 keymap('n', '<c-s>', ':w<CR>', {})
 keymap('i', '<c-s>', '<Esc>:w<CR>a', {})
 
+-- Exit with q
+keymap('n', '<leader>q', ':q<CR>', silent)
+
+-- Make escape do nothing when in insert mode
+keymap("i", "<Esc>", "<Nop>", opts)
+
+-- Use jj instead of escape to exit normal mode
+keymap('i', 'jj', '<Esc>', opts)
+
+-- Creating splits
+keymap('n', '<leader>v', ':vsplit<space>', {})
+keymap('n', '<leader>h', ':split<space>', {})
+
 -- Moving between splits
 keymap('n', '<c-j>', '<c-w>j', opts)
 keymap('n', '<c-k>', '<c-w>k', opts)
 keymap('n', '<c-h>', '<c-w>h', opts)
 keymap('n', '<c-l>', '<c-w>l', opts)
-
--- Exit with q
-keymap('n', '<leader>q', ':q<CR>', { silent = true })
-
--- Make espace do nothing when in insert mode
-keymap("i", "<Esc>", "<Nop>", opts)
-
--- Use jj instead of espace to exit normal mode
-keymap('i', 'jj', '<Esc>', opts)
-
--- Splitting keymaps
-keymap('n', '<leader>v', ':vsplit<space>', {})
-keymap('n', '<leader>h', ':split<space>', {})
 
 -- Resize splits
 keymap('n', '<up>', '<c-w>+', opts)
@@ -198,7 +199,7 @@ keymap('n', '<left>', '3<c-w><', opts)
 keymap('n', '<right>', '3<c-w>>', opts)
 
 -- Hide search results
-keymap('n', '<leader>n', ':nohl<CR>', { silent = true })
+keymap('n', '<leader>n', ':nohl<CR>', silent)
 
 -- Telescope
 keymap('n', '<leader>f', '<cmd>:lua require("telescope.builtin").find_files()<cr>', opts)
