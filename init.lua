@@ -1,19 +1,23 @@
 -- Plugins
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
-  use 'dracula/vim'
   use {
       'nvim-telescope/telescope.nvim',
       requires = { {'nvim-lua/plenary.nvim'} }
   }
+
+  -- TreeSitter
+  -- use 'nvim-treesitter/nvim-treesitter'
+ 
+  -- Colorschemes
+  use 'morhetz/gruvbox'
+  use 'arcticicestudio/nord-vim'
+
   use 'vim-airline/vim-airline'
   use 'vim-airline/vim-airline-themes'
-  -- Uncomment package using
-  -- and config below to use Treesitter
-  -- use 'nvim-treesitter/nvim-treesitter'
+
+  -- Utils
   use 'vimwiki/vimwiki'
-  use 'joshdick/onedark.vim'
-  use 'morhetz/gruvbox'
   use 'tpope/vim-fugitive'
 end)
 
@@ -47,17 +51,13 @@ vim.o.splitbelow = true
 vim.o.splitright = true
 
 -- Background
-vim.o.background = "light"
---vim.o.background = "dark"
+vim.o.background = "dark"
 vim.o.termguicolors = true
 
 -- Colorscheme
 vim.cmd [[
 try
-  "colorscheme dracula
-  "colorscheme onedark
-  colorscheme gruvbox
-  " et g:dracula_italic = 0
+  colorscheme nord
 catch /^Vim\%((\a\+)\)\=:E185/
   colorscheme default
   set background=dark
@@ -67,11 +67,9 @@ endtry
 -- Airline
 vim.cmd [[
 try
-  "let g:airline_theme='dracula'
-  "let g:airline_theme='onedark'
-  let g:airline_theme='gruvbox'
+  let g:airline_theme='nord'
   let g:airline_powerline_fonts = 1
-  let g:gruvbox#extensions#tabline#enabled = 1
+  let g:nord#extensions#tabline#enabled = 1
 catch
 endtry
 ]]
