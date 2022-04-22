@@ -12,7 +12,7 @@ require('packer').startup(function()
   }
 
   -- TreeSitter
-  -- use 'nvim-treesitter/nvim-treesitter'
+  use 'nvim-treesitter/nvim-treesitter'
  
   -- Colorschemes
   use 'morhetz/gruvbox'
@@ -82,16 +82,16 @@ endtry
 ]]
 
 -- Treesitter
--- local configs = require'nvim-treesitter.configs'
--- configs.setup {
---   ensure_installed = "maintained", -- Only use parsers that are maintained
---   highlight = { -- enable highlighting
---     enable = true,
---   },
---   indent = {
---     enable = false, -- default is disabled anyways
---   }
--- }
+local configs = require'nvim-treesitter.configs'
+configs.setup {
+  ensure_installed = { "bash", "c_sharp", "css", "go", "html", "json", "lua", "python", "javascript" },
+  highlight = { -- enable highlighting
+    enable = true,
+  },
+  indent = {
+    enable = false, -- default is disabled anyways
+  }
+}
 
 -- VimWiki
 vim.cmd [[
