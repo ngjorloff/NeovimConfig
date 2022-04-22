@@ -1,6 +1,11 @@
 -- Plugins
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
+
+  -- Utils
+  use 'vimwiki/vimwiki'
+  use 'tpope/vim-fugitive'
+
   use {
       'nvim-telescope/telescope.nvim',
       requires = { {'nvim-lua/plenary.nvim'} }
@@ -15,10 +20,6 @@ require('packer').startup(function()
 
   use 'vim-airline/vim-airline'
   use 'vim-airline/vim-airline-themes'
-
-  -- Utils
-  use 'vimwiki/vimwiki'
-  use 'tpope/vim-fugitive'
 end)
 
 -- No swap file
