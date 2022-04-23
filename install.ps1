@@ -11,12 +11,12 @@ Copy-Item -Path ".\*" -Destination $neovimDir -Recurse -Include ".lua"
 & git clone https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim"
 
 if (!(Get-Command "nvim" -errorAction SilentlyContinue)) {
-    Write-Host "Neovim is not added to PATH, cannot install plugins"
+    Write-Host "Neovim is not added to PATH, cannot install plugins" -ForegroundColor Red
     exit 1
 }
 
 & nvim -c "PackerSync"
 
-Write-Host "Script finished"
+Write-Host "Script finished" -ForegroundColor Green
 
 exit 0
