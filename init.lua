@@ -29,6 +29,7 @@ require('packer').startup(function()
   -- Colorschemes
   use 'morhetz/gruvbox'
   use 'arcticicestudio/nord-vim'
+  use 'tomasiser/vim-code-dark'
 
   -- Airline
   use 'vim-airline/vim-airline'
@@ -90,7 +91,7 @@ vim.o.termguicolors = true
 -- Colorscheme
 vim.cmd [[
 try
-  colorscheme nord
+  colorscheme codedark
 catch /^Vim\%((\a\+)\)\=:E185/
   colorscheme default
   set background=dark
@@ -100,7 +101,7 @@ endtry
 -- Airline
 vim.cmd [[
 try
-  let g:airline_theme='nord'
+  let g:airline_theme='codedark'
   let g:airline_powerline_fonts = 1
   let g:nord#extensions#tabline#enabled = 1
 catch
